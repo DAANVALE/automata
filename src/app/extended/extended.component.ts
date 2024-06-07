@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ServiceIndentify } from './extended.service';
+import { ServiceIdentify } from './extended.service';
 
 @Component({
   selector: 'app-extended',
@@ -8,17 +8,17 @@ import { ServiceIndentify } from './extended.service';
 })
 export class ExtendedComponent {
 
-  constructor(s_Indetify: ServiceIndentify){
+  constructor(s_Idetify: ServiceIdentify){
     this.myTrim()
-    s_Indetify._arguments = this.argument;
+    s_Idetify._arguments = this.argument;
   }
 
-  text: String = "int main string \n args \t nono 34 -- \n //   -  908"
+  text: string = "int main string \n args \t nono 34 -- \n //   -  908"
   argument: string[] = []
 
   myTrim(){
     let value = ""
-    for(let a in this.text){
+    for(let a in this.text as String){
       let char = this.text[a]
       if(char !== " " && char !== "\n" && char !== "\t" && char !== "\0"){
         value += char
