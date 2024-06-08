@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ServiceIdentify } from './extended.service';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-extended',
@@ -8,9 +9,10 @@ import { ServiceIdentify } from './extended.service';
 })
 export class ExtendedComponent {
 
-  constructor(s_Idetify: ServiceIdentify){
+  constructor(s_Idetify: ServiceIdentify, http: HttpClient){
     this.myTrim()
     s_Idetify._arguments = this.argument;
+    s_Idetify.identify();
   }
 
   text: string = "int main string \n args \t nono 34 -- \n //   -  908"
