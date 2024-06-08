@@ -29,5 +29,8 @@
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,
     "strictTemplates": true
+  },
+  "assets":{
+    "textfile": "assets/text.txt"
   }
 }

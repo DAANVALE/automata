@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-
+import { Cont } from './states';
 @Injectable({providedIn: 'root'})
 export class ServiceIdentify {
 
@@ -16,12 +16,15 @@ export class ServiceIdentify {
   identify(): void{
     for(let a in this._arguments){
       var identified = identify(this._arguments[a])
-
       if(!identified){
         Conter.error++;
       }
 
     }
+  }
+
+  getCounter(): Cont{
+    return Conter;
   }
 
 }
@@ -41,7 +44,7 @@ function identify(cadena: string): boolean{
   }
 
   switch(char){
-    case "<" && ">":{
+    case "<": case ">":{
       return identifyRelationalOperators_1(cadena);
     }
     case "=":{
@@ -50,16 +53,17 @@ function identify(cadena: string): boolean{
     case "!":{
       return identifyLogicalOperatiors_1(cadena)
     }
-    case "&" && "|":{
+    case "&": case "|":{
       return identifyLogicalOperators_2(cadena, char);
     }
-    case "*" && "%":{
+    case "*": case "%":{
       return identifyArithmeticOperators_2(cadena);
     }
-    case "{" && "}":{
+    case "{": case "}":{
       return identifybrace(cadena);
     }
-    case "(" && ")":{
+    case "(":
+    case ")":{
       return identifyParenthesis(cadena);
     }
     case returnNumber(char): {
@@ -128,18 +132,18 @@ function identifyAlmostDecimal(cadena: string){
     return true;
   }
 
-  var char = cadena[0];
-  cadena = cadena.substring(1);
+  for(var i = 0; i < cadena.length; i++){
+    if(!numbers.includes(cadena[i])){
+      return false;
+    }
 
-  if(!numbers.includes(char)){
-    return false;
+    if(cadena[i] !== "0"){
+      return identifyDecimal(cadena.substring(i+1));
+    }
   }
 
-  if(char !== "0"){
-    identifyDecimal(cadena);
-  }
-
-  return identifyAlmostDecimal(cadena);
+  Conter.integer++;
+  return true;
 }
 
 function identifyDecimal(cadena: string){
@@ -418,7 +422,7 @@ function identifyParenthesis(cadena: string){
   return false;
 }
 
-export const Conter = {
+export const Conter: Cont = {
   reservedWords: 0,
   identifier: 0,
   relationalOperators : 0,

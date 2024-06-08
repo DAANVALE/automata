@@ -1,54 +1,37 @@
-enum reservedWords {
-  "if",
-  "main",
-  "else",
-  "switch",
-  "case",
-  "default",
-  "for",
-  "do",
-  "while",
-  "break",
-  "int",
-  "String",
-  "double",
-  "char",
-  "print"
+export const Contador = {
+  reservedWords: 0,
+  identifier: 0,
+  relationalOperators : 0,
+  logicalOperators : 0,
+  arithmeticOperators : 0,
+  increment : 0,
+  decrement : 0,
+  assignment : 0,
+  integer : 0,
+  decimal : 0,
+  string : 0,
+  comment : 0,
+  lineComment : 0,
+  parenthesis : 0,
+  brace : 0,
+  error: 0,
 }
 
-enum relationalOperators {"<", "<=", ">", ">=", "==", "!="};
-enum logicalOperators {"&&", "||", "!"};
-enum arithmeticOperators {"+", "-", "*", "/", "%"};
-enum increment {"++"};
-enum decrement {"--"};
-enum assignment {"="};
-
-export interface Token {
-  type: TokenType;
-  value: string;
-}
-
-export interface TokenError {
-  type: TokenType;
-  value: string;
-  error: string;
-}
-
-interface TokenType{
-  RESERVED_WORD: reservedWords,
-  IDENTIFIER: string,
-  RELATIONAL_OPERATOR: relationalOperators,
-  LOGICAL_OPERATOR: logicalOperators,
-  ARITHMETIC_OPERATOR: arithmeticOperators,
-  INCREMENT: increment,
-  DECREMENT: decrement,
-  ASSIGNMENT: assignment,
-  INTEGER: number,
-  DECIMAL: number,
-  STRING: string,
-  COMMENT: "",
-  LINE_COMMENT: "",
-  PARENTHESIS: "",
-  BRACE: "",
-  ERROR: 0,
+export interface Cont {
+  reservedWords: number;
+  identifier: number;
+  relationalOperators : number;
+  logicalOperators : number;
+  arithmeticOperators : number;
+  increment : number;
+  decrement : number;
+  assignment : number;
+  integer : number;
+  decimal : number;
+  string : number;
+  comment : number;
+  lineComment : number;
+  parenthesis : number;
+  brace : number;
+  error: number;
 }

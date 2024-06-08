@@ -10,5 +10,5 @@ export class AppComponent {
 
   constructor(private primengConfig: PrimeNGConfig) {}
 
-  title = 'dAaN yAeL VaLEnciA aLVarEz';
+  title = 'Logica';
 }

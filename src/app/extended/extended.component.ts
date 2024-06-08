@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { ServiceIdentify } from './extended.service';
 import { HttpClient } from '@angular/common/http';
+import { Conter } from './extended.service';
+import { Cont } from './states';
 
 @Component({
   selector: 'app-extended',
@@ -9,20 +11,40 @@ import { HttpClient } from '@angular/common/http';
 })
 export class ExtendedComponent {
 
-  constructor(s_Idetify: ServiceIdentify, http: HttpClient){
-    this.myTrim()
-    s_Idetify._arguments = this.argument;
-    s_Idetify.identify();
+  contador: Cont = Conter;
+  argument: string[] = []
+  text: string = ""
+  httpClient : HttpClient;
+  s_Idetify: ServiceIdentify;
+
+  constructor(s_Idetify: ServiceIdentify, private http: HttpClient){
+    this.httpClient = http;
+    this.s_Idetify = s_Idetify;
   }
 
-  text: string = "int main string \n args \t nono 34 -- \n //   -  908"
-  argument: string[] = []
+  ngOnInit(): void {
+    this.restartCounter();
+  }
+
+
+
+  restartCounter(){
+    this.httpClient.get('assets/text.txt', {responseType: 'text'}).subscribe(data => {
+      this.text = data;
+    }).add(() => {
+      this.myTrim()
+      this.s_Idetify._arguments = this.argument;
+      this.s_Idetify.identify();
+      this.contador = this.s_Idetify.getCounter();
+      console.log(this.contador)
+    });
+  }
 
   myTrim(){
     let value = ""
     for(let a in this.text as String){
       let char = this.text[a]
-      if(char !== " " && char !== "\n" && char !== "\t" && char !== "\0"){
+      if(char !== " " && char !== "\n" && char !== "\t" && char !== "\0" && char !== "\r" && char !== "\v" && char !== "\f"){
         value += char
         continue
       }
