@@ -39,11 +39,10 @@ function identify(cadena: string): boolean{
   let char = cadena[0] as string;
   cadena = cadena.substring(1);
 
-  if(char.match(/^[a-zA-Z_]$/)){
-    return identifyIdentifier(cadena);
-  }
-
   switch(char){
+    case returnLetter(char):{
+      return identifyIdentifier(cadena);
+    }
     case "<": case ">":{
       return identifyRelationalOperators_1(cadena);
     }
@@ -96,9 +95,23 @@ export const reservadas = [
   "double", "char", "print"
 ];
 
+export const letters = [
+  "a", "b", "c", "d", "e", "f", "g", "h", "i", "j",
+  "k", "l", "m", "n", "o", "p", "k", "r", "s", "t",
+  "u","v", "w", "x", "y", "z", "_", "ñ"
+];
+
 export const numbers = [
   "0", "1", "2", "3", "4", "5", "6", "7", "8", "9"
 ]
+
+function returnLetter(char: string){
+  if(letters.includes(char.toLowerCase())){
+    return char;
+  }else{
+    return "a";
+  }
+}
 
 function returnNumber(char: string){
   if(numbers.includes(char)){
@@ -162,21 +175,21 @@ function identifyDecimal(cadena: string){
   return true
 }
 
-function identifyIdentifier(cadena: string){
+function identifyIdentifier(cadena: string): boolean{
 
   if (cadena.length === 0) {
     Conter.identifier++;
     return true;
   }
 
-  for (let i = 0; i < cadena.length; i++) {
-    if (!cadena[i].match(/^[a-zA-Z0-9_]$/)) {
-        return false;
-    }
+  var char = cadena[0];
+  cadena = cadena.substring(1);
+
+  if(!letters.includes(char) && !numbers.includes(char)){
+    return false;
   }
 
-  Conter.identifier++;
-  return true
+  return identifyIdentifier(cadena);
 }
 
 function identifyRelationalOperators_1(cadena: string){
