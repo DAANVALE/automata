@@ -8,7 +8,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { ExtendedComponent } from './extended/extended.component';
 import { HttpClientModule } from '@angular/common/http';
 import { InputTextareaModule } from 'primeng/inputtextarea';
-
+import { FormsModule } from '@angular/forms';
+import { CardModule } from 'primeng/card';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -20,7 +22,11 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
     BrowserModule,
     ButtonModule,
     HttpClientModule,
-    InputTextareaModule
+    InputTextareaModule,
+    FormsModule,
+    InputTextareaModule,
+    CardModule,
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

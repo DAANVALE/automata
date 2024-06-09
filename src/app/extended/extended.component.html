@@ -1,22 +1,41 @@
-
-<div style="padding: 20px;">
-<p-button >
-  <ng-template pTemplate="label">
-        <i class="pi pi-check"></i>
-        <span>Click - Obtener del txt</span>
-    </ng-template>
-</p-button>
-
-<p-button>
-  <ng-template pTemplate="label">
+<div>
+  <p-button (onClick)="onReset()">
+    <ng-template pTemplate="label">
       <i class="pi pi-check"></i>
-      <span>Click - Obtener del label</span>
-  </ng-template>
-</p-button>
+      <span style="margin-left: 10px;">Obtener del txt</span>
+    </ng-template>
+  </p-button>
 </div>
 
-<input type="text" pInputTextarea
-  placeholder="Ingrese texto"
-  style="width: 100%; margin-top: 20px; margin-bottom: 20px;
-  height: 300px;"
-/>
+<div>
+
+  <form [formGroup]="formGroup">
+    <textarea
+    placeholder="text"
+    value="{{text}}"
+    rows="20"
+    cols="60"
+    pInputTextarea
+    formControlName="text">
+  </textarea>
+</form>
+
+  <ul>
+    <li> {{ contador.reservedWords }} : palabras reservadas</li>
+    <li> {{ contador.identifier }} : identificadores</li>
+    <li> {{ contador.relationalOperators }} : operadores relacionales</li>
+    <li> {{ contador.logicalOperators }} : operadores logicos</li>
+    <li> {{ contador.arithmeticOperators }} : operadores aritmeticos:</li>
+    <li> {{ contador.increment }} : incremento</li>
+    <li> {{ contador.decrement }} : decremento</li>
+    <li> {{ contador.assignment }} : asignacion</li>
+    <li> {{ contador.integer }} : numeros</li>
+    <li> {{ contador.decimal }} : decimales</li>
+    <li> {{ contador.string }} : cadenas</li>
+    <li> {{ contador.comment }} : comentarios multilinea</li>
+    <li> {{ contador.lineComment }} : comentarios en linea</li>
+    <li> {{ contador.parenthesis }} : parentesis</li>
+    <li> {{ contador.brace }} : llaves</li>
+    <li> {{ contador.error }} : errores</li>
+  </ul>
+</div>

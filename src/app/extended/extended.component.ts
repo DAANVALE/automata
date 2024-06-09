@@ -1,43 +1,84 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ServiceIdentify } from './extended.service';
 import { HttpClient } from '@angular/common/http';
 import { Conter } from './extended.service';
 import { Cont } from './states';
+import { Observable, pipe } from 'rxjs';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-extended',
   templateUrl: './extended.component.html',
   styleUrls: ['./extended.component.css']
 })
-export class ExtendedComponent {
+export class ExtendedComponent implements OnInit{
 
   contador: Cont = Conter;
   argument: string[] = []
   text: string = ""
+  defaultText: string = "int for ( ) { if ( a == 1 ) { return 1 } else { return 0 } = + - * / % } 4..1 "
   httpClient : HttpClient;
   s_Idetify: ServiceIdentify;
+  formGroup: FormGroup<any>;
 
-  constructor(s_Idetify: ServiceIdentify, private http: HttpClient){
+  constructor(s_Idetify: ServiceIdentify, private http: HttpClient, private formBuilder: FormBuilder,){
     this.httpClient = http;
     this.s_Idetify = s_Idetify;
+    this.formGroup = this.formBuilder.group({
+      text: ['']
+    });
+
   }
 
   ngOnInit(): void {
-    this.restartCounter();
+
+    this.argument = [];
+    this.s_Idetify.restartCounter();
+
+    this.getTextFile();
+
+    this.formGroup.get('text')?.valueChanges.subscribe(() => {
+      this.text = this.formGroup.get('text')?.value;
+      this.onTextChange();
+    });
+
   }
 
+  onReset() {
+    this.argument = [];
+    this.s_Idetify.restartCounter();
+    this.getTextFile();
+  }
 
+  getTextFileContent(): Observable<string>{
+    return this.httpClient.get('assets/text.txt', { responseType: 'text' });
+  }
 
-  restartCounter(){
-    this.httpClient.get('assets/text.txt', {responseType: 'text'}).subscribe(data => {
+  async getTextFile(): Promise<void> {
+    await this.getTextFileContent()
+    .subscribe(data => {
       this.text = data;
-    }).add(() => {
-      this.myTrim()
-      this.s_Idetify._arguments = this.argument;
-      this.s_Idetify.identify();
-      this.contador = this.s_Idetify.getCounter();
-      console.log(this.contador)
+      this.ejecuteLogic();
+    }, error => {
+      this.text = this.defaultText;
+      this.ejecuteLogic();
     });
+  }
+
+  ejecuteLogic(){
+    this.myTrim()
+    this.s_Idetify._arguments = this.argument;
+    this.s_Idetify.identify();
+    this.contador = this.s_Idetify.getCounter();
+    console.log(this.s_Idetify.getCounter());
+  }
+
+  onTextChange(): void {
+    // Lógica adicional que deseas ejecutar cuando cambia el texto
+    console.log('El texto ha cambiado:', this.text);
+    this.argument = [];
+    this.s_Idetify.restartCounter();
+    this.ejecuteLogic();
   }
 
   myTrim(){
