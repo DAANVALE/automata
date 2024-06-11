@@ -141,8 +141,7 @@ function identifyInteger(cadena: string){
 
 function identifyAlmostDecimal(cadena: string){
   if (cadena.length === 0) {
-    Conter.integer++;
-    return true;
+    return false;
   }
 
   for(var i = 0; i < cadena.length; i++){
@@ -380,6 +379,11 @@ function identifyEndComment(cadena: string): boolean{
 
   var char = cadena[0];
   cadena = cadena.substring(1);
+
+  if(char === "*"){
+    return identifyEndComment(cadena);
+  }
+
   if(char !== "/"){
     return identifyExtendComment(cadena);
   }
